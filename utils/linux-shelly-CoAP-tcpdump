@@ -1,0 +1,1 @@
+tcpdump -A udp port 5683

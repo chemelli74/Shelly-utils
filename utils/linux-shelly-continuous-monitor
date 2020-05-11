@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while true
+do 
+   ./linux-shelly-check >> linux-shelly-log-$(date +"%y-%m-%d").log;
+   sleep 60;
+done
+

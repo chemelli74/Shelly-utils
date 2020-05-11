@@ -1,0 +1,9 @@
+  energy_daily:
+    source: sensor.shelly_total_consumption
+    cycle: daily
+  energy_monthly:
+    source: sensor.shelly_total_consumption
+    cycle: monthly
+  energy_yearly:
+    source: sensor.shelly_total_consumption
+    cycle: yearly

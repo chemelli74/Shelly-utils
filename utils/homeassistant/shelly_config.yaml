@@ -1,0 +1,25 @@
+    sensors:
+      - current_consumption
+      - total_consumption
+      - rssi
+      - uptime
+      - over_power
+      - device_temp
+      - over_temp
+      - cloud
+      - battery
+    attributes:
+      - ip_address
+      - shelly_type
+      - shelly_id
+      - has_firmware_update
+      - firmware_version
+      - cloud_status
+      - current_consumption
+      - total_consumption
+      - over_power
+      - over_temp
+      - battery
+    cloud_auth_key: !secret shelly_cloud_key
+    cloud_server: shelly-9-eu.shelly.cloud
+    tmpl_name: '{name}'

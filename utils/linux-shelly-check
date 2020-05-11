@@ -1,0 +1,19 @@
+#!/bin/bash
+
+netclass='192.168.188'
+
+for ip in '21' '22' '23' '24' '25' '26' '27' '28' '29' '30' '33' '43' '44'
+do
+  echo -n $(date)' - ip:'$netclass'.'$ip' - ram_free:';
+  json=$(curl -s $netclass.$ip/status);
+  ram=$(echo -n $json | jq .ram_free);
+  echo -n $ram' - uptime:';
+  uptime=$(echo -n $json | jq .uptime);
+  echo -n $uptime' - rssi:';
+  rssi=$(echo -n $json | jq .wifi_sta.rssi);
+  echo -n $rssi' - temp:';
+  temp=$(echo -n $json | jq .temperature);
+  echo -n $temp' - current_pos:';
+  echo $json | jq .rollers[0].current_pos;
+done;
+echo "---------------------------------------------------------------";
