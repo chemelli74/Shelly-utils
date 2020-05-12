@@ -1,0 +1,28 @@
+  alias: Shelly cloud status
+  trigger:
+    platform: event
+    event_type: state_changed
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "
+        {% set list = namespace(id=[]) %}
+        {% for s in states.sensor %}
+          {% if s.object_id.startswith('shelly_sh') and s.object_id.endswith('_cloud_status') %}
+            {% set list.id = list.id + [ s.entity_id ] %}
+          {% endif %}
+        {% endfor %}
+        {{ trigger.event.data.entity_id in list.id }}"
+      - condition: template
+        value_template: "{{ trigger.event.data.new_state.state != trigger.event.data.old_state.state }}"
+      - condition: template
+        value_template: "{{ states('sensor.ha_uptime') | float > 2 }}"
+  action:
+  - data_template:
+      message: Shelly {{trigger.event.data.new_state.name}} moved to state {{trigger.event.data.new_state.state}}
+      title: HA Notification - Shelly cloud status
+    service: notify.mail_send
+  - data_template:
+      message: Shelly {{trigger.event.data.new_state.name}} moved to state {{trigger.event.data.new_state.state}}
+    service: system_log.write

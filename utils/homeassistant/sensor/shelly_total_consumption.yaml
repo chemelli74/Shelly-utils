@@ -1,0 +1,14 @@
+- platform: template
+  sensors:
+    shelly_total_consumption:
+        friendly_name: Total Energy
+        entity_id: sensor.time
+        unit_of_measurement: kWh
+        value_template: >
+          {% set ns = namespace(states=[]) %}
+          {% for s in states.sensor %}
+            {% if s.object_id.startswith('shelly_sh') and s.object_id.endswith('_total_consumption') %}
+              {% set ns.states = ns.states + [ s.state | float ] %}
+            {% endif %}
+          {% endfor %}
+          {{ (ns.states | sum) | round(2) }}
